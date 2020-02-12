@@ -12,11 +12,19 @@ composer install --no-progress --no-suggest --prefer-dist | tee -a /start.log
 
 # generate key
 echo "Gerando chave" | tee -a /start.log
-cp .env.example .env | tee -a /start.log
+test -f ".env" && echo "Arquivo .env Existe, ignorando copia" | tee -a /start.log || echo "Nao existe, copiando .env.example para .env" && cp .env.example .env | tee -a /start.log
 php artisan key:generate | tee -a /start.log
 
 # setup permission
 # chmod 775 app storage bootstrap -R
+
+# Aguardando conexão com banco
+printf "%s" "Waiting for Banco de Dados ..." | tee -a /start.log
+while ! timeout 0.2 ping -c 1 -n db &> /dev/null
+do
+    printf "%c" "." | tee -a /start.log
+done
+printf "\n%s\n"  "Server is back online" | tee -a /start.log
 
 # migrate data base
 echo "Migrando banco de dados..." | tee -a /start.log
