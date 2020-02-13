@@ -19,7 +19,7 @@ php artisan key:generate | tee -a /start.log
 # chmod 775 app storage bootstrap -R
 
 # Aguardando conexão com banco
-./wait-for-it.sh -t 0 db:5432 | tee -a /start.log
+/wait-for-it.sh -t 0 db:5432 | tee -a /start.log
 
 # migrate data base
 echo "Migrando banco de dados..." | tee -a /start.log
