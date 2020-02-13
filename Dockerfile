@@ -17,9 +17,11 @@ RUN apt-get update \
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Copiando configuração nginx
+# Copiando scripts
 COPY ./scripts/start.sh /start.sh
 RUN chmod +x /start.sh
+COPY ./scripts/wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
 
 # Condig PHP
 RUN echo 'upload_max_filesize = 800M' >> /etc/php/7.4/fpm/conf.d/99-overrides.ini \
