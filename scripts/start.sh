@@ -20,7 +20,7 @@ php artisan key:generate | tee -a /start.log
 
 # Aguardando conexão com banco
 printf "%s" "Waiting for Banco de Dados ..." | tee -a /start.log
-while ! timeout 0.2 ping -c 1 -n db &> /dev/null
+while ! timeout 0.2 ping -c 1 -n db:5432 &> /dev/null
 do
     printf "%c" "." | tee -a /start.log
 done
